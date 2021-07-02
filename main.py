@@ -114,7 +114,7 @@ def addTask():
             print("Validate on submit")
             _tname = form.inputTask.data
             _tpriority = request.form.get('priority')
-            task = models.Task(description = unicode(_tname).decode('utf-8'), user_id = session.get('user'), priority_id = _tpriority)
+            task = models.Task(description = _tname, user_id = session.get('user'), priority_id = _tpriority)
             db.session.add(task)
             db.session.commit()
             flash('Your task {} has been added'.format(_tname), 'success')
