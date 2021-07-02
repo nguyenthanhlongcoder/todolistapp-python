@@ -118,7 +118,7 @@ def addTask():
             db.session.add(task)
             db.session.commit()
             flash('Your task {} has been added'.format(_tname), 'success')
-            return redirect('/addTask')
+            return redirect('/userHome')
         return render_template('addtask.html', form = form, priorities = priorities)
 
 @app.route('/editTask/<int:id>', methods=['GET','POST'])
