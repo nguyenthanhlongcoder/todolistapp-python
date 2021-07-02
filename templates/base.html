@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To do list App</title>
+    <link href="../static/bootstrap-4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/bootstrap-4.0.0/css/style.css" rel="stylesheet">
+    <script src="./static/bootstrap-4.0.0/js/script.js"></script>
+</head>
+<body>
+ <div class="jumbotron" style="margin-bottom:0">
+        <a class =navbar-brand href="#">
+            <img src="../static/imgs/bvu.png" alt="logo" height="100px"/>
+        </a>
+    </div>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                {% if 'userHome' in request.url %}
+                {% set active = 'active' %}
+                {% else %}
+                {% set active = '' %}
+                {% endif %}
+                <a class="nav-link {{active}}" href="/userHome">Home</a>
+            </li>
+            {% if 'user' not in session %}
+             <li class="nav-item">
+                  {% if 'signIn' in request.url %}
+                {% set active = 'active' %}
+                {% else %}
+                {% set active = '' %}
+                {% endif %}
+                <a class="nav-link {{active}}" href="/signIn">Sign In</a>
+            </li>
+            <li class="nav-item">
+                 {% if 'signUp' in request.url %}
+                {% set active = 'active' %}
+                {% else %}
+                {% set active = '' %}
+                {% endif %}
+                <a class="nav-link {{active}}" href="/signUp">Sign Up</a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+                 {% if 'addTask' in request.url %}
+                {% set active = 'active' %}
+                {% else %}
+                {% set active = '' %}
+                {% endif %}
+                <a class="nav-link {{active}}" href="/addTask">Add Task</a>
+            </li>
+
+            {% if 'user' in session %}
+             <li class="nav-item">
+                <a class="nav-link" href="/logOut">Logout</a>
+            </li>
+            {% endif %}
+
+        </ul>
+
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories = true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{category}}">
+                <strong>
+                    {% if category == 'danger' %}
+                        Error:
+                    {% else %}
+                        Success
+                    {% endif %}
+                </strong>
+                [{{ message }}]
+            </div>
+        {% endfor %}
+    {% endif%}
+    {% endwith %}
+    <!--end header-->
+    {% block content %}{% endblock %}
+ <div class="jumbotron text-center" style="margin-bottom:0">
+        <p>Copyright @2020 by ThanhLong</p>
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+{%extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <div class="jumpotron">
+            <h1>To do list App</h1>
+            <p class="head"></p>
+            <p><a class="btn btn-lg btn-success" href="/signUp">Sign up now</a></p>
+        </div>
+    </div>
+    <div class="row marketing">
+
+       {% for todoitem in todolist %}
+        <div class="col-sm-4">
+             <h4>{{todoitem.name}}</h4>
+        <p>{{todoitem.description}}</p>
+        {% endfor %}
+        </div>
+
+        </div>
+
+    </div>
+{% endblock %}

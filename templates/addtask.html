@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+ <div class="container">
+       <div class="jumpotron text-center">
+           <h1>To do list App</h1>
+           <form action="" method="post">
+               <div class="form-group">
+                   {% if form %}
+                       {{form.inputTask.label(class="sr-only")}}
+                       {{form.inputTask(class="form-control", placeholder="Task name")}}
+                       {% if form.inputTask.errors %}
+                            {% for error in form.inputTask.errors %}
+                            <div class="alert alert-success">
+                                <strong>Success: </strong> [{{error}}]
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+                   {% else %}
+                   <input type="text" class="form-control" placeholder="Task name" name="description" value="{{task.description}}">
+                   {% endif %}
+
+               </div>
+                {% if priorities %}
+               <select name="priority" class="form-control" id="priority">
+                   {% for priority in priorities %}
+
+                        {% if task and task.priority_id == priority.priority_id %}
+                        <option value="{{priority.priority_id}}" selected="selected">{{priority.description}}</option>
+                        {% else %}
+                        <option value="{{priority.priority_id}}">{{priority.description}}</option>
+                        {% endif %}
+                   {% endfor %}
+               </select>
+               {% endif %}
+               <p class="lead"></p>
+               {% if form %}
+                    {{ form.submit(class="btn btn-lg btn-success btn-block")}}
+               {% else %}
+                    <input type="submit" class="btn btn-lg btn-success btn-block" value="Update Task">
+               {% endif %}
+               <a class="btn-warning btn-block btn btn-lg" href="{{url_for('userHome')}}">Cancel</a>
+            </form>
+       </div>
+   </div>
+{% endblock %}
