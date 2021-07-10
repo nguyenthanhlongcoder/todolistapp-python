@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="jumbotron" style="margin-top: 2rem;" data-aos="fade-up" data-aos-anchor-placement="top-bottom">
+        {% if project %}
+            <h1>Edit Project</h1>
+        {% else %}
+            <h1>Add Project</h1>
+        {% endif %}
+        <form action="/addProject" method="POST">
+            {{ form.hidden_tag() }}
+            {% if project %}
+                <input type="hidden" name="id" value="{{ project.project_id }}">
+            {% else %}
+                <input type="hidden" name="id" value="0">
+            {% endif %}
+            <div class="form-group">
+                {{ form.inputProjectName.label(class="sr-only") }}
+                {{ form.inputProjectName(class="form-control", placeholder="Project Name") }}
+
+                {% if form.inputProjectName.errors %}
+                    {% for error in form.inputProjectName.errors %}
+                    <div class="alert alert-danger">
+                        <strong>Error:</strong> [{{ error }}]
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="form_group mb-3">
+                {{ form.inputProjectDesc.label(class="sr-only") }}
+                {{ form.inputProjectDesc(class="form-control", placeholder="Project Description") }}
+            </div>
+            <div class="form-group">
+                {{ form.inputProjectDeadline.label(class="sr-only") }}
+                {{ form.inputProjectDeadline(class="form-control", placeholder="Project Deadline") }}
+                {% if form.inputProjectDeadline.errors %}
+                    {% for error in form.inputProjectDeadline.errors %}
+                    <div class="alert alert-danger">
+                        <strong>Error:</strong> [{{ error }}]
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <p class="lead"></p>
+            <p>
+
+                {{ form.submit(class="btn btn-lg btn-success btn-block") }}
+                <a class="btn btn-lg btn-warning btn-block" href="/userHome">Cancel</a>
+            </p>
+            </form>
+        </div>
+    </div>
+    {% endblock %}
+

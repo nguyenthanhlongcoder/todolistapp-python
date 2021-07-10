@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Email, EqualTo, InputRequired
-
+from wtforms.fields.core import SelectField
+from wtforms.fields.html5 import DateField
 class SignUpForm(FlaskForm):
     inputFirstName = StringField('First Name',
                                  [DataRequired(message="Pleas enter your first name!")])
@@ -23,8 +24,19 @@ class SignInForm(FlaskForm):
 
 class TaskForm(FlaskForm):
     inputTask = StringField('Task', [DataRequired(message="Please enter the task!")])
+    inputTaskDeadline = DateField('Task Deadline', format='%Y-%m-%d')
     submit = SubmitField('Add Task')
 
 class PriotiryForm(FlaskForm):
     inputTask = StringField('Priority', [DataRequired(message="Please enter the priority!")])
     submit = SubmitField('Add Priority')
+
+class ProjectForm(FlaskForm):
+    inputProjectName = StringField('Project Name',
+        [DataRequired(message="Please enter your project name!")])
+    inputProjectDesc = TextAreaField('Project Description')
+
+    inputProjectDeadline = DateField('Project Deadline', format='%Y-%m-%d')
+    submit = SubmitField('Add/Update Project')
+
+

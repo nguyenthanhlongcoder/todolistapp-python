@@ -4,24 +4,50 @@
 
  <div class="container">
        <div class="jumpotron text-center">
-           <h1>To do list App</h1>
+           {% if task %}
+           <h1>Edit Task for: {{project.name}}</h1>
+           {% else %}
+           <h1>Add Task for: {{project.name}}</h1>
+           {% endif %}
            <form action="" method="post">
                <div class="form-group">
                    {% if form %}
                        {{form.inputTask.label(class="sr-only")}}
                        {{form.inputTask(class="form-control", placeholder="Task name")}}
-                       {% if form.inputTask.errors %}
-                            {% for error in form.inputTask.errors %}
-                            <div class="alert alert-success">
-                                <strong>Success: </strong> [{{error}}]
-                            </div>
-                            {% endfor %}
-                        {% endif %}
                    {% else %}
-                   <input type="text" class="form-control" placeholder="Task name" name="description" value="{{task.description}}">
+                        <input type="text" class="form-control" placeholder="Task name" name="description" value="{{task.description}}">
                    {% endif %}
 
                </div>
+                <div class="form-group">
+                    {% if form %}
+                        {{ form.inputTaskDeadline.label(class="sr-only") }}
+                        {{ form.inputTaskDeadline(class="form-control") }}
+                            {% if form.inputTaskDeadline.errors %}
+                                {% for error in form.inputTaskDeadline.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>Error:</strong> [{{ error }}]
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+                    {% else %}
+                        <input type="date" name="deadline" value="{{task.deadline.date()}}" class="form-control">
+                    {% endif %}
+                </div>
+           {% if task and statuses %}
+            <div class="form-group">
+               <select name="status" id="status" class="form-control">
+                   {% for status in statuses %}
+                    {% if task.status_id == status.status_id %}
+                        <option value="{{status.status_id}}" selected="selected">{{status.desc}}</option>
+                   {% else %}
+                        <option value="{{status.status_id}}" >{{status.desc}}</option>
+                   {% endif %}
+                   {% endfor %}
+               </select>
+            </div>
+           {% endif %}
+
                 {% if priorities %}
                <select name="priority" class="form-control" id="priority">
                    {% for priority in priorities %}
@@ -35,7 +61,7 @@
                </select>
                {% endif %}
                <p class="lead"></p>
-               {% if form %}
+               {% if not task %}
                     {{ form.submit(class="btn btn-lg btn-success btn-block")}}
                {% else %}
                     <input type="submit" class="btn btn-lg btn-success btn-block" value="Update Task">
