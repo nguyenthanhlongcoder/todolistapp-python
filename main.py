@@ -6,7 +6,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 import os
 import models
-from flask_msearch import  Search
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
@@ -16,8 +15,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-search = Search()
-search.init_app(app)
+
 
 @app.route('/')
 def main():
